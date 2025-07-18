@@ -1,46 +1,71 @@
-/* === Basic Setup === */
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
   text-align: center;
 }
 
-/* === Title Styling === */
+body {
+  font-family: 'Press Start 2P', cursive;
+  background: linear-gradient(to right, #ffe0ec, #e0c3fc);
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* === Game Title with Animation === */
 h1 {
   background-color: #fb6f92;
   color: #f7e1d7;
   height: 5rem;
   line-height: 5rem;
+  animation: pulse 2s infinite;
+  font-size: 1.5rem;
 }
 
-/* === Main Game Container Box === */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); color: #ffffff; }
+  100% { transform: scale(1); }
+}
+
+/* === Main Game Box (Glassmorphism) === */
 .big-gamebox {
-  width: 90%;
-  max-width: 600px; /* Reduced from 800px to 600px */
+  width: 95%;
+  max-width: 450px;
   margin: 40px auto;
-  padding: 20px; /* Reduced padding */
-  border: 4px solid #ff8ba7;
+  padding: 15px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
   border-radius: 15px;
-  background-color: #fff5f8;
+  background: rgba(255, 245, 248, 0.6);
+  backdrop-filter: blur(10px);
   box-shadow:
-    0 10px 20px rgba(0, 0, 0, 0.25),
-    0 6px 6px rgba(0, 0, 0, 0.22);
+    0 6px 12px rgba(0, 0, 0, 0.2),
+    0 4px 6px rgba(0, 0, 0, 0.15);
   transform: perspective(1000px) rotateX(1deg) rotateY(1deg);
   transition: all 0.3s ease-in-out;
 }
 
-/* === Individual Choice Buttons === */
+/* === Choice Buttons === */
+.choices {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
 .choice {
-  height: 130px;
-  width: 130px;
+  height: 100px;
+  width: 100px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   transition: all 0.3s ease;
+  position: relative;
 }
 
-/* Hover effect for each choice (Rock, Paper, Scissors) */
 .choice:hover {
   cursor: pointer;
   background-color: #ffb3c6;
@@ -48,154 +73,109 @@ h1 {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-/* Image styling inside each choice */
+/* === Image Styling with Shine Effect === */
 img {
-  height: 110px;
-  width: 110px;
+  height: 90px;
+  width: 90px;
   object-fit: cover;
   border-radius: 50%;
   transition: transform 0.3s ease;
 }
 
-/* Image zoom effect on hover */
 .choices img:hover {
   transform: scale(1.1);
 }
 
-/* Choices Container (Flex) */
-.choices {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 3rem;
-  margin-top: 5rem;
+/* Shine Effect */
+img::after {
+  content: "";
+  position: absolute;
+  top: 0; left: -75%;
+  width: 50%; height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  transform: skewX(-20deg);
+  z-index: 2;
+  animation: shine 2s infinite;
 }
 
-/* Spacer between sections */
-.space {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 20vh;
+@keyframes shine {
+  100% { left: 125%; }
 }
 
-/* === Scoreboard Container with Shadow === */
+/* === Scoreboard === */
 .box-score {
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 5px;
+  margin-top: 2rem;
+  border: 3px solid #ffc8dd;
+  background-color: #ffb3c6;
   box-shadow:
     0 10px 20px rgba(0, 0, 0, 0.25),
     0 6px 6px rgba(0, 0, 0, 0.22);
-  transform: perspective(1000px) rotateX(1deg) rotateY(1deg);
-  transition: all 0.3s ease-in-out;
-  border: 4px solid #ffc8dd;
-  background-color: #ffb3c6;
 }
 
-/* Flex layout for You and Computer score boxes */
 .score-board {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  font-size: 2rem;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-  gap: 5rem;
+  gap: 1.5rem;
+  font-size: 1.2rem;
+  margin: 1rem 0;
 }
 
-/* Raw score number styling */
-#you-score,
-#comp-score {
-  font-size: 4rem;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+.score-box p {
+  margin: 0.5rem 0;
 }
 
-/* Digital style score box (looks like digital clock) */
+#you-score, #comp-score {
+  font-size: 2.5rem;
+}
+
 .digital {
   background-color: #c08edd;
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 36px;
-  padding: 10px 20px;
+  font-size: 28px;
+  padding: 8px 16px;
   border-radius: 8px;
   box-shadow: inset 0 0 10px #bf9ed3;
   display: inline-block;
-  min-width: 60px;
+  min-width: 50px;
   transition: all 0.3s ease;
 }
 
-/* Hover effect for score box */
 .score-box:hover .digital {
   background-color: #a46bde;
   box-shadow: inset 0 0 15px #6a3799;
   transform: scale(1.05);
 }
 
-/* === Message Section === */
+/* === Message Box === */
 .msg-container {
-  margin-top: 5rem;
+  margin-top: 2rem;
 }
 
-/* Message box (e.g. "Play Your Move") */
 #msg {
   background-color: #fb6f92;
   color: #fff;
-  font-size: 2rem;
-  display: inline;
-  padding: 1rem;
+  font-size: 1.3rem;
+  display: inline-block;
+  padding: 0.8rem;
   border-radius: 1rem;
   transition: all 0.3s ease;
 }
 
-/* Hover effect for message */
 #msg:hover {
   background-color: #ff85a2;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
   transform: scale(1.05);
 }
 
-/* CHOICES HOVER EFFECT */
-.choice:hover {
-  cursor: pointer;
-  background-color: #ffb3c6;
-  transform: scale(1.05);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
-}
-
-/* CHOICE IMAGE ZOOM */
-.choices img:hover {
-  transform: scale(1.1);
-  transition: transform 0.3s ease;
-}
-
-/* SCORE-BOX HOVER (optional) */
-.score-box:hover .digital {
-  background-color: #a46bde;
-  box-shadow: inset 0 0 15px #6a3799;
-  transform: scale(1.05);
-  transition: all 0.3s ease;
-}
-
-/* MSG HOVER */
-#msg:hover {
-  background-color: #ff85a2;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-  transform: scale(1.05);
-  transition: all 0.3s ease;
-}
-
-/* BIG BOX already has this */
-.big-gamebox:hover {
-  transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1.02);
-  box-shadow:
-    0 15px 30px rgba(0, 0, 0, 0.3),
-    0 8px 10px rgba(0, 0, 0, 0.22);
-}
-
-
+/* === Reset Button with Shine Effect === */
 .reset-container {
   text-align: center;
   margin-top: 20px;
@@ -204,13 +184,31 @@ img {
 #reset-btn {
   background-color: #cc5e7a;
   color: #fff;
-  font-size: 18px;
-  padding: 10px 20px;
+  font-size: 16px;
+  padding: 8px 16px;
   border: none;
   border-radius: 8px;
   box-shadow: 0 8px 15px rgba(209, 28, 128, 0.3);
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
   transition: 0.3s ease;
+}
+
+#reset-btn::after {
+  content: "";
+  background: rgba(255, 255, 255, 0.3);
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  transform: skewX(-45deg);
+  transition: left 0.5s ease;
+}
+
+#reset-btn:hover::after {
+  left: 100%;
 }
 
 #reset-btn:hover {
@@ -218,66 +216,12 @@ img {
   transform: scale(1.05);
 }
 
-
 /* === Responsive Styles === */
-@media (max-width: 1024px) {
-  .choices {
-    gap: 2rem;
-  }
-
-  .score-board {
-    gap: 3rem;
-  }
-}
-
 @media (max-width: 768px) {
   h1 {
-    font-size: 1.8rem;
-    height: 4rem;
-    line-height: 4rem;
-  }
-
-  .choice {
-    height: 120px;
-    width: 120px;
-  }
-
-  img {
-    height: 100px;
-    width: 100px;
-  }
-
-  .choices {
-    flex-wrap: wrap;
-    gap: 2rem;
-    margin-top: 3rem;
-  }
-
-  .score-board {
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  #msg {
-    font-size: 1.5rem;
-    padding: 0.8rem;
-  }
-
-  #you-score, #comp-score {
-    font-size: 2.5rem;
-  }
-
-  .digital {
-    font-size: 28px;
-    padding: 8px 16px;
-    min-width: 50px;
-  }
-}
-
-@media (max-width: 480px) {
-  .big-gamebox {
-    padding: 20px;
-    border-width: 2px;
+    font-size: 1.2rem;
+    height: auto;
+    padding: 1rem;
   }
 
   .choice {
@@ -290,63 +234,22 @@ img {
     width: 70px;
   }
 
-  .score-board {
-    font-size: 1.5rem;
-  }
-
-  .msg-container {
-    margin-top: 2rem;
-  }
-
   #msg {
-    font-size: 1.2rem;
+    font-size: 1rem;
     padding: 0.6rem;
   }
 
-  #reset-btn {
-    font-size: 16px;
-    padding: 8px 16px;
-  }
-}
-
-@media (min-width: 1025px) {
-  .big-gamebox {
-    max-width: 600px; /* reduce from 800px */
-    padding: 20px;
-  }
-
-  h1 {
-    font-size: 2rem;
-    height: 4.5rem;
-    line-height: 4.5rem;
-  }
-
-  .choice {
-    height: 140px;
-    width: 140px;
-  }
-
-  img {
-    height: 120px;
-    width: 120px;
-  }
-
-  #msg {
-    font-size: 1.6rem;
-    padding: 0.8rem 1rem;
-  }
-
-  #reset-btn {
-    font-size: 16px;
-    padding: 8px 16px;
-  }
-
   .digital {
-    font-size: 30px;
-    padding: 8px 16px;
+    font-size: 24px;
+    padding: 6px 12px;
   }
 
   #you-score, #comp-score {
-    font-size: 3rem;
+    font-size: 2rem;
+  }
+
+  #reset-btn {
+    font-size: 14px;
+    padding: 6px 12px;
   }
 }
